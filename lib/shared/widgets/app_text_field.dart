@@ -1,3 +1,4 @@
+import 'package:city_savvy_admin_panel/shared/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTextField extends StatefulWidget {
@@ -34,7 +35,7 @@ class _AppTextFieldState extends State<AppTextField> {
         style: const TextStyle(
           color: Colors.black,
         ),
-        cursorColor: Colors.purple[400],
+        cursorColor: AppColors.colorPrimary,
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: const TextStyle(
@@ -52,7 +53,7 @@ class _AppTextFieldState extends State<AppTextField> {
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
               width: 2,
-              color: Colors.purple[400]!,
+              color: AppColors.colorPrimary!,
             ),
           ),
           suffixIcon: widget.isPassword
