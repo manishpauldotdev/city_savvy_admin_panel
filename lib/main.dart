@@ -1,4 +1,4 @@
-import 'package:city_savvy_admin_panel/features/auth/presentations/signin.dart';
+import 'package:city_savvy_admin_panel/features/auth/presentations/signin_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,9 +13,7 @@ class MainApp extends StatelessWidget {
     // print(MediaQuery.sizeOf(context).width);
     // print(MediaQuery.sizeOf(context).height);
     return const MaterialApp(
-      home: Scaffold(
-        body: SignInPage(),
-      ),
+      home: SignInPage(),
     );
   }
 }

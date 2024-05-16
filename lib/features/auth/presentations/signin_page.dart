@@ -12,8 +12,10 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
-    return ScreenTypeLayout.builder(
-      desktop: (context) => desktopView(context),
+    return Scaffold(
+      body: ScreenTypeLayout.builder(
+        desktop: (context) => desktopView(context),
+      ),
     );
   }
 }

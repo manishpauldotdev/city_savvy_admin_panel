@@ -1,3 +1,4 @@
+import 'package:city_savvy_admin_panel/features/home/presentations/home_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:city_savvy_admin_panel/shared/styles/app_colors.dart';
@@ -114,7 +115,13 @@ Widget desktopView(BuildContext context) {
                         child: const Text('Forgot Password?'),
                       ),
                       const Spacer(),
-                      const AppButton(btnText: 'Login'),
+                      AppButton(
+                        btnText: 'Login',
+                        onBtnPressed: () => Navigator.push(
+                          context,
+                          HomePage.route(),
+                        ),
+                      ),
                     ],
                   ),
                 )
