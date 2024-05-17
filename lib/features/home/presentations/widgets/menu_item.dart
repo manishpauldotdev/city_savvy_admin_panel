@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class MenuItem extends StatelessWidget {
   final String menuTitle;
   final IconData menuIcon;
+  final Function() changeView;
 
   const MenuItem({
     super.key,
     required this.menuTitle,
     required this.menuIcon,
+    required this.changeView,
   });
 
   @override
@@ -15,7 +17,7 @@ class MenuItem extends StatelessWidget {
     final deviceWidth = MediaQuery.sizeOf(context).width;
     // final deviceHeight = MediaQuery.sizeOf(context).height;
     return InkWell(
-      onTap: () {},
+      onTap: changeView,
       child: Container(
         width: deviceWidth * 0.14,
         margin: const EdgeInsets.symmetric(vertical: 10),

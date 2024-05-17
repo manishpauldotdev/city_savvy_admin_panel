@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
-import 'package:city_savvy_admin_panel/features/home/presentations/views/desktop_view.dart';
+import 'package:city_savvy_admin_panel/features/home/presentations/widgets/home_page_content.dart';
 
 class HomePage extends StatelessWidget {
   static route() => MaterialPageRoute(
@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ScreenTypeLayout.builder(
-        desktop: (context) => desktopView(context),
+        desktop: (context) => const HomePageContent(),
       ),
     );
   }
