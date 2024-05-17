@@ -1,4 +1,9 @@
+import 'package:city_savvy_admin_panel/features/ad/presentations/ad_page.dart';
+import 'package:city_savvy_admin_panel/features/dashboard/presentations/dashboard_page.dart';
 import 'package:city_savvy_admin_panel/features/home/presentations/widgets/menu_item.dart';
+import 'package:city_savvy_admin_panel/features/messages/presentations/messages_page.dart';
+import 'package:city_savvy_admin_panel/features/settings/presentations/settings_page.dart';
+import 'package:city_savvy_admin_panel/features/statistics/presentations/statistics.dart';
 import 'package:city_savvy_admin_panel/shared/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -32,15 +37,15 @@ class _HomePageContentState extends State<HomePageContent> {
 
     switch (index) {
       case 0:
-        renderedView = dashboardView();
+        renderedView = const DashboardPage();
       case 1:
-        renderedView = messageView();
+        renderedView = const MessagesPage();
       case 2:
-        renderedView = statisticsView();
+        renderedView = const StatisticsPage();
       case 3:
-        renderedView = settingsView();
+        renderedView = const SettingsPage();
       case 4:
-        renderedView = postAdView();
+        renderedView = const AdPage();
       default:
     }
 
