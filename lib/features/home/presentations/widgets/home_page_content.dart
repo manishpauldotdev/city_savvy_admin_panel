@@ -1,11 +1,8 @@
-import 'package:city_savvy_admin_panel/features/ad/presentations/ad_page.dart';
-import 'package:city_savvy_admin_panel/features/dashboard/presentations/dashboard_page.dart';
-import 'package:city_savvy_admin_panel/features/home/presentations/widgets/menu_item.dart';
-import 'package:city_savvy_admin_panel/features/messages/presentations/messages_page.dart';
-import 'package:city_savvy_admin_panel/features/settings/presentations/settings_page.dart';
-import 'package:city_savvy_admin_panel/features/statistics/presentations/statistics.dart';
-import 'package:city_savvy_admin_panel/shared/styles/app_colors.dart';
 import 'package:flutter/material.dart';
+
+import 'package:city_savvy_admin_panel/features/home/presentations/widgets/menu_item.dart';
+import 'package:city_savvy_admin_panel/shared/styles/app_colors.dart';
+import '../../../../shared/exports/main_pages.dart';
 
 class HomePageContent extends StatefulWidget {
   const HomePageContent({super.key});
@@ -15,25 +12,26 @@ class HomePageContent extends StatefulWidget {
 }
 
 class _HomePageContentState extends State<HomePageContent> {
-  int index = 0;
+  double index = 0;
+  bool areChildrenVisible = false;
 
-  void changeViewContent(int updatedViewIndex) {
+  void changeViewContent(double updatedViewIndex) {
     setState(() {
       index = updatedViewIndex;
     });
   }
 
-  Widget dashboardView() => const Text('Dashboard');
-  Widget messageView() => const Text('Message');
-  Widget statisticsView() => const Text('Statistics');
-  Widget settingsView() => const Text('Settings');
-  Widget postAdView() => const Text('Post Ad');
+  void toggleMenuChildrenVisibility() {
+    setState(() {
+      areChildrenVisible = !areChildrenVisible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final deviceWidth = MediaQuery.sizeOf(context).width;
 
-    Widget renderedView = dashboardView();
+    Widget renderedView = const DashboardPage();
 
     switch (index) {
       case 0:
@@ -41,18 +39,26 @@ class _HomePageContentState extends State<HomePageContent> {
       case 1:
         renderedView = const MessagesPage();
       case 2:
-        renderedView = const StatisticsPage();
+        renderedView = const ManagementPage();
+      case 2.1:
+        renderedView = const UsersManagementPage();
+      case 2.2:
+        renderedView = const TransportManagementPage();
       case 3:
-        renderedView = const SettingsPage();
+        renderedView = const StatisticsPage();
       case 4:
         renderedView = const AdPage();
+      case 5:
+        renderedView = const NotificationsPage();
+      case 6:
+        renderedView = const SettingsPage();
       default:
     }
 
     return Row(
       children: [
         Container(
-          width: deviceWidth * 0.15,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: const BoxDecoration(
             color: Color.fromARGB(255, 240, 240, 240),
           ),
@@ -69,7 +75,10 @@ class _HomePageContentState extends State<HomePageContent> {
                   ),
                 ),
               ),
-              const Divider(),
+              SizedBox(
+                width: deviceWidth * 0.14,
+                child: const Divider(),
+              ),
               MenuItem(
                 menuIcon: Icons.space_dashboard_outlined,
                 menuTitle: 'Dashboard',
@@ -83,14 +92,31 @@ class _HomePageContentState extends State<HomePageContent> {
                 isSelected: index == 1,
               ),
               MenuItem(
-                menuIcon: Icons.trending_up,
-                menuTitle: 'Statistics',
+                menuIcon: Icons.label_important_outline,
+                menuTitle: 'Management',
                 changeView: () => changeViewContent(2),
                 isSelected: index == 2,
+                hasChildren: true,
+                areChildrenVisible: areChildrenVisible,
+                toggleChildrenVisibility: () => toggleMenuChildrenVisibility(),
+                children: [
+                  MenuItem(
+                    menuIcon: Icons.manage_accounts_outlined,
+                    menuTitle: 'Users',
+                    changeView: () => changeViewContent(2.1),
+                    isSelected: index == 2.1,
+                  ),
+                  MenuItem(
+                    menuIcon: Icons.emoji_transportation_outlined,
+                    menuTitle: 'Transport',
+                    changeView: () => changeViewContent(2.2),
+                    isSelected: index == 2.2,
+                  ),
+                ],
               ),
               MenuItem(
-                menuIcon: Icons.settings_outlined,
-                menuTitle: 'Settings',
+                menuIcon: Icons.trending_up,
+                menuTitle: 'Statistics',
                 changeView: () => changeViewContent(3),
                 isSelected: index == 3,
               ),
@@ -101,7 +127,22 @@ class _HomePageContentState extends State<HomePageContent> {
                 isSelected: index == 4,
               ),
               const Spacer(),
-              const Divider(height: 0),
+              MenuItem(
+                menuIcon: Icons.notifications_outlined,
+                menuTitle: 'Notification',
+                changeView: () => changeViewContent(5),
+                isSelected: index == 5,
+              ),
+              MenuItem(
+                menuIcon: Icons.settings_outlined,
+                menuTitle: 'Settings',
+                changeView: () => changeViewContent(6),
+                isSelected: index == 6,
+              ),
+              SizedBox(
+                width: deviceWidth * 0.14,
+                child: const Divider(),
+              ),
               SizedBox(
                 height: 60,
                 child: Row(
@@ -109,8 +150,8 @@ class _HomePageContentState extends State<HomePageContent> {
                   children: [
                     CircleAvatar(
                       backgroundColor: AppColors.colorPrimary,
-                      minRadius: 25,
-                      maxRadius: 25,
+                      minRadius: 24,
+                      maxRadius: 24,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(50),
                         child: Container(
@@ -121,9 +162,15 @@ class _HomePageContentState extends State<HomePageContent> {
                     const SizedBox(width: 10),
                     const Column(
                       mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Manish Paul'),
-                        Text('Super Admin'),
+                        Text(
+                          'Super Admin',
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(width: 10),
@@ -134,11 +181,12 @@ class _HomePageContentState extends State<HomePageContent> {
             ],
           ),
         ),
-        Container(
-          width: deviceWidth * 0.85,
-          decoration: const BoxDecoration(color: Colors.white),
-          child: Center(
-            child: renderedView,
+        Expanded(
+          child: Container(
+            decoration: const BoxDecoration(color: Colors.white),
+            child: Center(
+              child: renderedView,
+            ),
           ),
         ),
       ],
